@@ -1,5 +1,8 @@
 #!/bin/bash
 
+PREPATH=$(eval echo ~$USER)
+MMRDIR="${PREPATH}/code/mean_motion_resonance"
+FARGODIR="${PREPATH}/programs/fargo3d"
 MMRDIR="/Users/jsn/landing/code/mean_motion_resonance"
 FARGODIR="/Users/jsn/landing/programs/fargo3d"
 NCPU=4
