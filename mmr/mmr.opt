@@ -1,0 +1,36 @@
+FLUIDS := 0
+NFLUIDS = 1
+FARGO_OPT += -DNFLUIDS=${NFLUIDS}
+
+#Monitoring options
+#MONITOR_SCALAR = MASS | MOM_X | TORQ
+#MONITOR_Y_RAW  = TORQ
+MONITOR_SCALAR = MASS
+
+#Damping zones in the active mesh
+
+FARGO_OPT += -DSTOCKHOLM
+
+FARGO_OPT +=  -DX
+FARGO_OPT +=  -DY
+
+#Equation of State
+FARGO_OPT +=  -DISOTHERMAL
+
+#Coordinate System.
+FARGO_OPT +=  -DCYLINDRICAL
+
+FARGO_OPT += -DPOTENTIAL
+
+FARGO_OPT += -DVISCOSITY
+
+FARGO_OPT += -DNODEFAULTSTAR
+
+FARGO_OPT += -DBM08
+
+#Cuda blocks
+ifeq (${GPU}, 1)
+FARGO_OPT += -DBLOCK_X=16
+FARGO_OPT += -DBLOCK_Y=16
+FARGO_OPT += -DBLOCK_Z=1
+endif
