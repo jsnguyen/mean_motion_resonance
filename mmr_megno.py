@@ -22,7 +22,7 @@ def mmr_megno(orbital_parameters, period_ratios, mass_ratios, star_mass=1, n_orb
         sim.add(m=star_mass)
 
         for period,mass in zip(period_ratios,mass_ratios):
-            sim.add(m=mass, a=a*(period**(2/3)), e=e, omega=np.random.uniform(0,2*np.pi))
+            sim.add(m=mass, a=a*(period**(2/3)), e=e, omega=np.random.uniform(0,2*np.pi), f=np.random.uniform(0,2*np.pi))
 
         n_particles = sim.N_real
 
@@ -58,14 +58,14 @@ def write_parameters_to_file(output_filename, period_ratios, mass_ratios, n_samp
 def main():
 
     ms_to_mj = 1/1000 # solar mass to jupiter mass
-    period_ratios  = [1,2,4]
-    mass_ratios = [1*ms_to_mj,1*ms_to_mj,1.5*ms_to_mj]
-    n_samples = 128
+    period_ratios  = [1,2]
+    mass_ratios = [1*ms_to_mj,1*ms_to_mj]
+    n_samples = 256
     a_range = (1,100)
     e_range = (0,1-1e-6)
 
-    output_filename = 'mmr_megno_parameters.txt'
-    output_im_megnos_filename = 'im_megnos.npy'
+    output_filename = 'mmr_megno_parameters_1_2.txt'
+    output_im_megnos_filename = 'im_megnos_1_2.npy'
 
     write_parameters_to_file(output_filename, period_ratios, mass_ratios, n_samples, a_range, e_range)
 
@@ -78,7 +78,7 @@ def main():
 
     partial_mmr_megno = functools.partial(mmr_megno, period_ratios=period_ratios, mass_ratios=mass_ratios)
 
-    pool = Pool(processes=multiprocessing.cpu_count())
+    pool = Pool(processes=64)
     results = list(tqdm.tqdm(pool.imap(partial_mmr_megno,orbital_parameters), total=len(orbital_parameters)))
 
     im_megnos = np.array(results).reshape(n_samples,n_samples)
