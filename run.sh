@@ -3,7 +3,7 @@
 PREPATH=$(eval echo ~$USER)
 MMRDIR="${PREPATH}/landing/code/mean_motion_resonance"
 FARGODIR="${PREPATH}/landing/programs/fargo3d"
-NCPU=4
+NCPU=128
 
 cd ${MMRDIR}
 
@@ -17,5 +17,5 @@ cp mmr.cfg "${FARGODIR}/planets"
 
 cd ${FARGODIR}
 
-make SETUP=mmr RESCALE=0 UNITS=0 PARALLEL=1
+#make SETUP=mmr RESCALE=0 UNITS=0 PARALLEL=1
 mpirun -np ${NCPU} ./fargo3d setups/mmr/mmr.par
