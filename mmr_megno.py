@@ -24,7 +24,7 @@ def mmr_megno(orbital_parameters, period_ratios, mass_ratios, star_mass=1, n_orb
         sim.add(m=star_mass)
 
         for period,mass in zip(period_ratios,mass_ratios):
-            sim.add(m=mass, a=a*(period**(2/3)), e=e, omega=np.random.uniform(0,2*np.pi), f=np.random.uniform(0,2*np.pi))
+            sim.add(m=mass, a=a*(period**(2/3)), e=np.random.normal(loc=e,scale=0.01), omega=np.random.uniform(0,2*np.pi), f=np.random.uniform(0,2*np.pi))
 
         n_particles = sim.N_real
 
