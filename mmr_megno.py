@@ -1,3 +1,5 @@
+import argparse
+
 import numpy as np
 import functools
 
@@ -79,7 +81,13 @@ def main():
 
     ms_to_mj = 1/1000 # solar mass to jupiter mass
 
-    run_name = '1_2_4_8'
+    parser = argparse.ArgumentParser()
+    parser.add_argument('run_name', type=str)
+    parser.add_argument('-n', type=int)
+
+    args = parser.parse_args()
+
+    run_name = args.run_name
     input_filename = 'mmr_megno_parameters_{}.txt'.format(run_name)
     output_im_megnos_filename = 'im_megnos_{}.npy'.format(run_name)
 
@@ -102,7 +110,7 @@ def main():
 
     partial_mmr_megno = functools.partial(mmr_megno, period_ratios=period_ratios, mass_ratios=mass_ratios)
 
-    pool = Pool(processes=64)
+    pool = Pool(processes=args.n)
     results = list(tqdm.tqdm(pool.imap(partial_mmr_megno,orbital_parameters), total=len(orbital_parameters)))
 
     im_megnos = np.array(results).reshape(n_samples,n_samples)
