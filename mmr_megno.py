@@ -55,19 +55,43 @@ def write_parameters_to_file(output_filename, period_ratios, mass_ratios, n_samp
         f.write('E_RANGE '+' '.join([str(el) for el in e_range]))
         f.write('\n')
 
+def read_parameters_from_file(input_filename):
+    parameters = {}
+    with open(input_filename, 'r') as f:
+        parameters['period_ratios'] = f.readline().strip().split()[1:]
+        parameters['mass_ratios'] = f.readline().strip().split()[1:]
+        parameters['n_samples'] = f.readline().strip().split()[1:]
+        parameters['a_range'] = f.readline().strip().split()[1:]
+        parameters['e_range'] = f.readline().strip().split()[1:]
+
+    for key in parameters.keys():
+
+        if key == 'period_ratios':
+            parameters[key] = [int(el) for el in parameters[key]]
+        elif key == 'n_samples':
+            parameters[key] = int(parameters[key][0])
+        else:
+            parameters[key] = [float(el) for el in parameters[key]]
+
+    return parameters
+
 def main():
 
     ms_to_mj = 1/1000 # solar mass to jupiter mass
-    period_ratios  = [1,2]
-    mass_ratios = [1*ms_to_mj,1*ms_to_mj]
-    n_samples = 256
-    a_range = (1,100)
-    e_range = (0,1-1e-6)
 
-    output_filename = 'mmr_megno_parameters_1_2.txt'
-    output_im_megnos_filename = 'im_megnos_1_2.npy'
+    run_name = '1_2_4_8'
+    input_filename = 'mmr_megno_parameters_{}.txt'.format(run_name)
+    output_im_megnos_filename = 'im_megnos_{}.npy'.format(run_name)
 
-    write_parameters_to_file(output_filename, period_ratios, mass_ratios, n_samples, a_range, e_range)
+    parameters = read_parameters_from_file(input_filename)
+
+    period_ratios  = parameters['period_ratios']
+    mass_ratios = parameters['mass_ratios']
+    n_samples = parameters['n_samples']
+    a_range = parameters['a_range']
+    e_range = parameters['e_range']
+
+    print(parameters)
 
     orbital_parameters = []
     for ee in np.linspace(*e_range,n_samples):
