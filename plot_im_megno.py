@@ -21,7 +21,7 @@ def read_parameters_from_file(input_filename):
 
     return parameters
 
-def plot_im_megno(im_megnos, parameters):
+def plot_im_megno(im_megnos, parameters, run_name):
 
     fig = plt.figure(figsize=(7,5))
     ax = plt.subplot(111)
@@ -41,15 +41,18 @@ def plot_im_megno(im_megnos, parameters):
     cb = plt.colorbar(im, ax=ax)
     cb.set_label('MEGNO')
     
-    plt.savefig('megno_1_2_4.pdf', bbox_inches='tight')
+    plt.savefig('megno_{}.pdf'.format(run_name), bbox_inches='tight')
 
 def main():
-    input_filename = 'mmr_megno_parameters_1_2_4.txt'
-    parameters = read_parameters_from_file(input_filename)
 
-    input_im_megnos_filename = 'im_megnos_1_2_4.npy'
+    run_name = '1_2'
+    input_filename = 'mmr_megno_parameters_{}.txt'.format(run_name)
+    input_im_megnos_filename = 'im_megnos_{}.npy'.format(run_name)
+
+    parameters = read_parameters_from_file(input_filename)
     im_megnos = np.load(input_im_megnos_filename)
-    plot_im_megno(im_megnos, parameters)
+
+    plot_im_megno(im_megnos, parameters, run_name)
 
 if __name__=='__main__':
     main()
