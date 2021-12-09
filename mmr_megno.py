@@ -1,6 +1,7 @@
 import argparse
 
 import numpy as np
+from scipy import stats
 import functools
 
 import rebound
@@ -23,8 +24,16 @@ def mmr_megno(orbital_parameters, period_ratios, mass_ratios, star_mass=1, n_orb
 
         sim.add(m=star_mass)
 
+        sigma = 0.01
+        e_dist = stats.truncnorm((0 - e) / sigma, (1 - e) / sigma, loc=e, scale=sigma)
+
         for period,mass in zip(period_ratios,mass_ratios):
-            sim.add(m=mass, a=a*(period**(2/3)), e=np.random.normal(loc=e,scale=0.01), omega=np.random.uniform(0,2*np.pi), f=np.random.uniform(0,2*np.pi))
+
+            rand_e = e_dist.rvs(1)
+            rand_omega = np.random.uniform(0,2*np.pi)
+            rand_f = np.random.uniform(0,2*np.pi)
+
+            sim.add(m=mass, a=a*(period**(2/3)), e=rand_e, omega=rand_omega, f=rand_f)
 
         n_particles = sim.N_real
 
