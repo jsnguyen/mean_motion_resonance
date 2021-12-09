@@ -1,5 +1,6 @@
 import os
 import numpy as np
+from pathlib import Path
 
 def generate_par(out_folder):
 
@@ -39,11 +40,13 @@ def generate_par(out_folder):
 
 def main():
     increment=0
-    out_folder_path = '/home/jsn/landing/data/mmr_'+str(increment).zfill(4)
+    prepath = str(Path.home())
+    print(prepath)
+    out_folder_path = prepath+'/landing/data/mmr_'+str(increment).zfill(4)
 
     while os.path.isdir(out_folder_path):
         increment+=1
-        out_folder_path = '/home/jsn/landing/data/mmr_'+str(increment).zfill(4)
+        out_folder_path = prepath+'/landing/data/mmr_'+str(increment).zfill(4)
 
     generate_par(out_folder_path)
 
