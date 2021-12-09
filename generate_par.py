@@ -23,16 +23,16 @@ def generate_par(out_folder):
                   'Rmid':                27.0, # middle of disk units of AU
                   'Rc':                  60.0, # disk cutoff units of AU
                   'SigmaVisc':           1.0,
-                  'Nx':                  64,
-                  'Ny':                  32,
+                  'Nx':                  64*3,
+                  'Ny':                  64,
                   'Xmin':                -3.14159265358979323844,
                   'Xmax':                3.14159265358979323844,
                   'Ymin':                10.0,
                   'Ymax':                45.0,
-                  'OmegaFrame':          1.0,
+                  'OmegaFrame':          0.0,
                   'Frame':               'F',
                   'DT':                  2*np.pi/10,
-                  'Ninterm':             10,
+                  'Ninterm':             100,
                   'Ntot':                100000,
                   'OutputDir':           out_folder
                   }
