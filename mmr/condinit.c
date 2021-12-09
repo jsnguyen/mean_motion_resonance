@@ -30,7 +30,8 @@ void Init() {
       r = Ymed(j);
       omega = sqrt(G*MSTAR/r/r/r);
       
-      rho[l] = SIGMA0*pow(r/R0,-SIGMASLOPE)*pow(-exp(r/r0),2.0-SIGMASLOPE)*(1.0+NOISE*(drand48()-.5));
+      rho[l] = SIGMA0*pow(r/R0,-SIGMASLOPE)*exp(-pow(r/RC,2.0-SIGMASLOPE))*(1.0+NOISE*(drand48()-.5));
+      //rho[l] = SIGMA0*pow(r/R0,-SIGMASLOPE)*(1.0+NOISE*(drand48()-.5));
       soundspeed  = omega*r*ASPECTRATIO*pow(r/R0,FLARINGINDEX);
 
 #ifdef ISOTHERMAL

@@ -1,3 +1,5 @@
+import argparse
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -45,14 +47,18 @@ def plot_im_megno(im_megnos, parameters, run_name):
 
 def main():
 
-    run_name = '1_2'
-    input_filename = 'mmr_megno_parameters_{}.txt'.format(run_name)
-    input_im_megnos_filename = 'im_megnos_{}.npy'.format(run_name)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('run_name', type=str)
+
+    args = parser.parse_args()
+
+    input_filename = 'mmr_megno_parameters_{}.txt'.format(args.run_name)
+    input_im_megnos_filename = 'im_megnos_{}.npy'.format(args.run_name)
 
     parameters = read_parameters_from_file(input_filename)
     im_megnos = np.load(input_im_megnos_filename)
 
-    plot_im_megno(im_megnos, parameters, run_name)
+    plot_im_megno(im_megnos, parameters, args.run_name)
 
 if __name__=='__main__':
     main()
