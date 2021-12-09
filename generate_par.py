@@ -20,6 +20,7 @@ def generate_par(out_folder):
                   'IndirectTerm':        'Yes',
                   'AlphaIn':             '1.0e-5',
                   'AlphaOut':            '7.5e-3',
+                  'Epsilon':             15.0, # units dimensionless parameter, multiplies R0 factor so R0 can be zero if scale free
                   'Rmid':                27.0, # middle of disk units of AU
                   'Rc':                  60.0, # disk cutoff units of AU
                   'SigmaVisc':           1.0,
@@ -29,11 +30,11 @@ def generate_par(out_folder):
                   'Xmax':                3.14159265358979323844,
                   'Ymin':                10.0,
                   'Ymax':                45.0,
-                  'OmegaFrame':          0.0,
+                  'OmegaFrame':          0.0, # sqrt(1/r1)
                   'Frame':               'F',
                   'DT':                  2*np.pi/10,
                   'Ninterm':             100,
-                  'Ntot':                100000,
+                  'Ntot':                1000000,
                   'OutputDir':           out_folder
                   }
 

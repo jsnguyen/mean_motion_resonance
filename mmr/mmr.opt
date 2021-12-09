@@ -4,8 +4,8 @@ FARGO_OPT += -DNFLUIDS=${NFLUIDS}
 
 #Monitoring options
 MONITOR_SCALAR = MASS | MOM_X | TORQ
-MONITOR_Y = TORQ | MOM_X
-MONITOR_2D = TORQ | MOM_X
+MONITOR_Y = MASS | TORQ | MOM_X
+MONITOR_2D = MASS | TORQ | MOM_X
 
 #Damping zones in the active mesh
 

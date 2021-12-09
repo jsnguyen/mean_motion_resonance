@@ -153,7 +153,7 @@ void visctensor_cyl_cpu(){
 
 // added new radially dependent viscosity
 #ifdef RVISCOSITY
-    viscosity = ALPHAIN * (1 - (0.5*(1-(ALPHAOUT/ALPHAIN))) * (1-tanh((ymed(j)-RMID)/(SIGMAVISC*R0))));
+    viscosity = ALPHAIN * (1 - (0.5*(1-(ALPHAOUT/ALPHAIN))) * (1-tanh((ymed(j)-RMID)/(SIGMAVISC*(R0*EPSILON)))));
 	viscosityzmym = viscosityzm = viscositym = viscosity;
 #endif
 
