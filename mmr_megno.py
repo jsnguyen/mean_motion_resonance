@@ -9,7 +9,7 @@ import multiprocessing
 from multiprocessing import Pool
 import tqdm
 
-def mmr_megno(orbital_parameters, period_ratios, mass_ratios, star_mass=1, n_orbits=1e4, n_avg=10):
+def mmr_megno(orbital_parameters, period_ratios, mass_ratios, star_mass=1, n_orbits=1e5, n_avg=10):
 
     megnos = []
     for _ in range(n_avg):

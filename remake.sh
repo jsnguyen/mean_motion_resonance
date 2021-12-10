@@ -6,17 +6,19 @@ FARGODIR="${PREPATH}/landing/programs/fargo3d"
 
 cd ${MMRDIR}
 
-echo "Copying \"visctensor_cyl.c\" to ${FARGODIR}/src/..."
+echo "Copying planet configs to ${FARGODIR}/planets/ ..."
+cp mmr_1_2.cfg ${FARGODIR}/planets
+cp mmr_1_2_4.cfg ${FARGODIR}/planets
+cp mmr_1_2_4_8.cfg ${FARGODIR}/planets
+
+echo "Copying \"visctensor_cyl.c\" to ${FARGODIR}/src/ ..."
 cp visctensor_cyl.c "${FARGODIR}/src/"
 
 echo "Generating par file..."
-python3 generate_par.py
+python3 generate_par.py $1
 
 echo "Copying mmr/ to setups..."
 cp -r mmr "${FARGODIR}/setups"
-
-echo "Copying mmr.cfg to planets..."
-cp mmr.cfg "${FARGODIR}/planets"
 
 cd ${FARGODIR}
 

@@ -1,8 +1,12 @@
 import os
+import argparse
+
 import numpy as np
 from pathlib import Path
 
-def generate_par(out_folder):
+def generate_par(out_folder, run_name):
+    
+    print('Making run_name parameter file:',run_name)
 
     parameters = {
                   'Setup':               'mmr',
@@ -12,7 +16,6 @@ def generate_par(out_folder):
                   'FlaringIndex':        0.25,
                   'DampingZone':         1.15,
                   'TauDamp':             0.3,
-                  'PlanetConfig':        'planets/mmr.cfg',
                   'ThicknessSmoothing':  0.6,
                   'RocheSmoothing':      0.0,
                   'Eccentricity':        0.0,
@@ -20,16 +23,11 @@ def generate_par(out_folder):
                   'IndirectTerm':        'Yes',
                   'AlphaIn':             '1.0e-5',
                   'AlphaOut':            '7.5e-3',
-                  'Epsilon':             15.0, # units dimensionless parameter, multiplies R0 factor so R0 can be zero if scale free
-                  'Rmid':                27.0, # middle of disk units of AU
-                  'Rc':                  60.0, # disk cutoff units of AU
                   'SigmaVisc':           1.0,
-                  'Nx':                  64*3,
-                  'Ny':                  64,
+                  'Nx':                  32*3,
+                  'Ny':                  32,
                   'Xmin':                -3.14159265358979323844,
                   'Xmax':                3.14159265358979323844,
-                  'Ymin':                10.0,
-                  'Ymax':                45.0,
                   'OmegaFrame':          0.0, # sqrt(1/r1)
                   'Frame':               'F',
                   'DT':                  2*np.pi/10,
@@ -38,6 +36,35 @@ def generate_par(out_folder):
                   'OutputDir':           out_folder
                   }
 
+
+    if run_name == '1_2':
+        # 1:2
+        parameters['PlanetConfig'] = 'planets/mmr_1_2.cfg'
+        parameters['Epsilon'] = 15.0 # units dimensionless parameter, multiplies R0 factor so R0 can be zero if scale free
+        parameters['Rmid'] = 18.0 # middle of disk units of AU
+        parameters['Rc'] = 30.0 # disk cutoff units of AU
+        parameters['Ymin'] = 10.0
+        parameters['Ymax'] = 25.0
+
+    elif run_name == '1_2_4':
+        # 1:2:4
+        parameters['PlanetConfig'] = 'planets/mmr_1_2_4.cfg'
+        parameters['Epsilon'] = 50.0 # units dimensionless parameter, multiplies R0 factor so R0 can be zero if scale free
+        parameters['Rmid'] = 43.0 # middle of disk units of AU
+        parameters['Rc'] = 135.0 # disk cutoff units of AU
+        parameters['Ymin'] = 45.0
+        parameters['Ymax'] = 130.0
+
+    elif run_name == '1_2_4_8':
+        # 1:2:4:8
+        parameters['Eccentricity'] = 0.0125
+        parameters['PlanetConfig'] = 'planets/mmr_1_2_4_8.cfg'
+        parameters['Epsilon'] = 75.0 # units dimensionless parameter, multiplies R0 factor so R0 can be zero if scale free
+        parameters['Rmid'] = 130.0 # middle of disk units of AU
+        parameters['Rc'] = 330.0 # disk cutoff units of AU
+        parameters['Ymin'] = 75.0
+        parameters['Ymax'] = 325.0
+
     par_filename = './mmr/mmr.par'
 
     with open(par_filename, 'w') as f:
@@ -45,6 +72,11 @@ def generate_par(out_folder):
             f.write('{:32} {:64}'.format(el,str(parameters[el])).rstrip()+'\n')
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('run_name', type=str)
+
+    args = parser.parse_args()
+
     increment=0
     prepath = str(Path.home())
     print(prepath)
@@ -54,7 +86,7 @@ def main():
         increment+=1
         out_folder_path = prepath+'/landing/data/mmr_'+str(increment).zfill(4)
 
-    generate_par(out_folder_path)
+    generate_par(out_folder_path, args.run_name)
 
 if __name__=='__main__':
     main()
