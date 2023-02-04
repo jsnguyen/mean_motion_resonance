@@ -26,10 +26,10 @@ void Init() {
   
   for (j=0; j<Ny+2*NGHY; j++) {
     for (i=0; i<Nx+2*NGHX; i++) {
-      
+
       r = Ymed(j);
       omega = sqrt(G*MSTAR/r/r/r);
-      
+
       rho[l] = SIGMA0*pow(r/(R0*EPSILON),-SIGMASLOPE)*exp(-pow(r/RC,2.0-SIGMASLOPE))*(1.0+NOISE*(drand48()-.5));
       //rho[l] = SIGMA0*pow(r/R0,-SIGMASLOPE)*(1.0+NOISE*(drand48()-.5));
       soundspeed  = omega*r*ASPECTRATIO*pow(r/(R0*EPSILON),FLARINGINDEX);
